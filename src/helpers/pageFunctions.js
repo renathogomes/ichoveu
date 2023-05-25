@@ -1,4 +1,6 @@
-import { searchCities } from './weatherAPI';
+import { searchCities, getWeatherByCity } from './weatherAPI';
+
+console.log(getWeatherByCity);
 
 /**
  * Cria um elemento HTML com as informações passadas
