@@ -55,5 +55,7 @@
   },
   "dependencies": {
     "vite": "^3.1.8"
-  }
+  },
+  "description": "Para realizar o projeto, atente-se a cada passo descrito a seguir e, se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀",
+  "keywords": []
 }

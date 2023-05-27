@@ -76,8 +76,8 @@ export function showForecast(forecastList) {
 /**
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
-export function createCityElement(cityInfo) {
-  const { name, country, temp, condition, icon /* url */ } = cityInfo;
+async function createCityElement(cityInfo) {
+  const { name, country, temp, condition, icon, url } = cityInfo;
 
   const cityElement = createElement('li', 'city');
 
@@ -94,12 +94,12 @@ export function createCityElement(cityInfo) {
   tempContainer.appendChild(conditionElement);
   tempContainer.appendChild(tempElement);
 
-  const iconElement = createElement('img', 'condition-icon');
+/*   const iconElement = createElement('img', 'condition-icon');
   iconElement.src = icon.replace('64x64', '128x128');
-
+ */
   const infoContainer = createElement('div', 'city-info-container');
   infoContainer.appendChild(tempContainer);
-  infoContainer.appendChild(iconElement);
+/*   infoContainer.appendChild(iconElement); */
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
@@ -113,17 +113,17 @@ export function createCityElement(cityInfo) {
 export async function handleSearch(event) {
   event.preventDefault();
   clearChildrenById('cities');
-  const ulElement = document.querySelector('#cities');
 
   const searchInput = document.getElementById('search-input');
   const searchValue = searchInput.value;
   const arrayCities = await searchCities(searchValue);
-  const arrayCityURL = arrayCities.map(async (city) => getWeatherByCity(city.url));
-  const arrayCityInfo = await Promise.all(arrayCityURL);
-  const cityInfo = arrayCityInfo.map((city) => {
-    createCityElement(city);
-    return ulElement.appendChild(createCityElement(city));
+  const arrayCityURL = arrayCities.map(async (city) => {
+    const url = city.url
+    await getWeatherByCity(url);
+    const ulElement = document.querySelector('#cities')
+    ulElement.appendChild(await createCityElement(arrayCityURL))
   });
-  console.log(cityInfo);
+  
+
   // seu código aqui
 }
