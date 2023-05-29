@@ -129,5 +129,7 @@ export async function handleSearch(event) {
     };
     return createCityElement(cityInfo);
   });
+  const ulElement = document.querySelector('#cities');
+  creatElements.forEach((element) => ulElement.appendChild(element));
 }
 // seu código aqui;
