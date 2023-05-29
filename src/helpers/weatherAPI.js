@@ -28,7 +28,7 @@ export const getWeatherByCity = async (cityURL) => {
 };
 
 export const fetchButton = async (urlButton) => {
-  const fetchLink = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${urlButton}&days=days=7`);
+  const fetchLink = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${urlButton}&days=7`);
   const data = await fetchLink.json();
   const mapForecast = data.forecast.forecastday.map((forecast) => ({
     date: forecast.date,

@@ -10,13 +10,9 @@ function createElement(tagName, className, textContent = '') {
   return element;
 }
 
-/**
- * Recebe as informações de uma previsão e retorna um elemento HTML
- */
 function createForecast(forecast) {
   const { date, maxTemp, minTemp, condition, icon } = forecast;
 
-  console.log(date);
   const weekday = new Date(date);
   weekday.setDate(weekday.getDate() + 1);
   const weekdayName = weekday.toLocaleDateString('pt-BR', { weekday: 'short' });
@@ -109,7 +105,7 @@ async function createCityElement(cityInfo) {
   cityElement.appendChild(buttonElement);
   buttonElement.addEventListener('click', async () => {
     const getFetchButton = await fetchButton(url);
-    showForecast(getFetchButton);
+    showForecast(await getFetchButton);
   });
 
   infoContainer.appendChild(tempContainer);
