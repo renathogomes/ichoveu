@@ -77,7 +77,7 @@ export function showForecast(forecastList) {
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
 async function createCityElement(cityInfo) {
-  const { name, country, temp, condition, icon, url } = cityInfo;
+  const { name, country, temp, condition, icon /* url */ } = cityInfo;
 
   const cityElement = createElement('li', 'city');
 
@@ -94,9 +94,9 @@ async function createCityElement(cityInfo) {
   tempContainer.appendChild(conditionElement);
   tempContainer.appendChild(tempElement);
 
-/*   const iconElement = createElement('img', 'condition-icon');
-  iconElement.src = icon.replace('64x64', '128x128');
- */
+ /*  const iconElement = createElement('img', 'condition-icon');
+  iconElement.src = icon.replace('64x64', '128x128'); */
+
   const infoContainer = createElement('div', 'city-info-container');
   infoContainer.appendChild(tempContainer);
 /*   infoContainer.appendChild(iconElement); */
@@ -115,15 +115,19 @@ export async function handleSearch(event) {
   clearChildrenById('cities');
 
   const searchInput = document.getElementById('search-input');
-  const searchValue = searchInput.value;
+  const searchValue = await searchInput.value;
   const arrayCities = await searchCities(searchValue);
-  const arrayCityURL = arrayCities.map(async (city) => {
-    const url = city.url
-    await getWeatherByCity(url);
-    const ulElement = document.querySelector('#cities')
-    ulElement.appendChild(await createCityElement(arrayCityURL))
+  const arrayGetWeather = arrayCities.map((city) => getWeatherByCity(city.url));
+  const cityPromises = await Promise.all(arrayGetWeather);
+  const creatElements = arrayCities.map((city, index) => {
+    const cityInfo = {
+      name: city.name,
+      country: city.country,
+      temp: cityPromises[index].temp,
+      condition: cityPromises[index].condition,
+      icon: cityPromises[index].icon,
+    };
+    return createCityElement(cityInfo);
   });
-  
-
-  // seu código aqui
 }
+// seu código aqui;
