@@ -104,12 +104,12 @@ async function createCityElement(cityInfo) {
 
   const buttonElement = document.createElement('button', 'btn');
   buttonElement.textContent = 'Ver previsão';
+  buttonElement.classList.add('city-forecast-button');
   cityElement.appendChild(buttonElement);
   buttonElement.addEventListener('click', async () => {
     const getFetchButton = await fetchButton(url);
     showForecast(getFetchButton);
   });
-  console.log(buttonElement);
 
   infoContainer.appendChild(tempContainer);
   infoContainer.appendChild(iconElement);
