@@ -77,9 +77,12 @@ export function showForecast(forecastList) {
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
 async function createCityElement(cityInfo) {
-  const { name, country, temp, condition, icon /* url */ } = cityInfo;
+  const { name, country, temp, condition, icon, url } = cityInfo;
 
+  const ulElement = document.querySelector('#cities');
   const cityElement = createElement('li', 'city');
+
+  ulElement.appendChild(cityElement);
 
   const headingElement = createElement('div', 'city-heading');
   const nameElement = createElement('h2', 'city-name', name);
@@ -94,12 +97,12 @@ async function createCityElement(cityInfo) {
   tempContainer.appendChild(conditionElement);
   tempContainer.appendChild(tempElement);
 
- /*  const iconElement = createElement('img', 'condition-icon');
-  iconElement.src = icon.replace('64x64', '128x128'); */
+  const iconElement = createElement('img', 'condition-icon');
+  iconElement.src = icon.replace('64x64', '128x128');
 
   const infoContainer = createElement('div', 'city-info-container');
   infoContainer.appendChild(tempContainer);
-/*   infoContainer.appendChild(iconElement); */
+  infoContainer.appendChild(iconElement);
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
@@ -119,17 +122,18 @@ export async function handleSearch(event) {
   const arrayCities = await searchCities(searchValue);
   const arrayGetWeather = arrayCities.map((city) => getWeatherByCity(city.url));
   const cityPromises = await Promise.all(arrayGetWeather);
-  const creatElements = arrayCities.map((city, index) => {
-    const cityInfo = {
+  const cityInfo = arrayCities.map(async (city, index) => {
+    const objectCities = {
       name: city.name,
       country: city.country,
       temp: cityPromises[index].temp,
       condition: cityPromises[index].condition,
       icon: cityPromises[index].icon,
+      url: city.url,
     };
-    return createCityElement(cityInfo);
+    return createCityElement(objectCities);
   });
-  const ulElement = document.querySelector('#cities');
-  creatElements.forEach((element) => ulElement.appendChild(element));
+  console.log(cityInfo);
+  await cityInfo();
 }
 // seu código aqui;
