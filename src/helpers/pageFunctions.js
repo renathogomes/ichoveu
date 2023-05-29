@@ -130,19 +130,10 @@ export async function handleSearch(event) {
   const searchInput = document.getElementById('search-input');
   const searchValue = await searchInput.value;
   const arrayCities = await searchCities(searchValue);
-  const arrayGetWeather = arrayCities.map((city) => getWeatherByCity(city.url));
-  const cityPromises = await Promise.all(arrayGetWeather);
-
-  arrayCities.map(async (city, index) => {
-    const cityInfo = {
-      name: city.name,
-      country: city.country,
-      temp: cityPromises[index].temp,
-      condition: cityPromises[index].condition,
-      icon: cityPromises[index].icon,
-      url: city.url,
-    };
-    return createCityElement(cityInfo);
-  });
+  const arrayGetWeather = await Promise.all(
+    arrayCities.map((city) => getWeatherByCity(city.url)),
+  );
+  const result = arrayGetWeather.map((element) => createCityElement(element));
+  return result;
 }
 // seu código aqui;
