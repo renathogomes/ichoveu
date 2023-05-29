@@ -101,12 +101,19 @@ async function createCityElement(cityInfo) {
   iconElement.src = icon.replace('64x64', '128x128');
 
   const infoContainer = createElement('div', 'city-info-container');
+
+  const buttonElement = document.createElement('button', 'btn', 'Ver previsão');
+  buttonElement.addEventListener('click', async () => {
+    const getFetchButton = await fetchButton(url);
+  });
+
   infoContainer.appendChild(tempContainer);
   infoContainer.appendChild(iconElement);
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
   cityElement.appendChild(iconElement);
+  cityElement.appendChild(tempContainer);
 
   return cityElement;
 }

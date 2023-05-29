@@ -26,3 +26,24 @@ export const getWeatherByCity = async (cityURL) => {
     url: cityURL,
   };
 };
+
+export const fetchButton = async (urlButton) => {
+  const fetchLink = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${urlButton}&days=days=7`);
+  const data = await fetchLink.json();
+  const mapForecast = data.forecast.forecastday.map((forecast) => ({
+    data: forecast.date,
+    maxTemp: forecast.day.maxtemp_c,
+    minTemp: forecast.day.mintemp_c,
+    condition: forecast.day.condition.text,
+    icon: forecast.day.condition.icon,
+  }));
+  console.log(data);
+  return mapForecast;
+};
+
+console.log(await fetchButton('sao-paulo-sao-paulo-brazil'));
+
+/* 
+data.forecast date:"2023-05-29"
+
+*/
