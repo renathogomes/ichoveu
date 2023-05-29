@@ -102,11 +102,14 @@ async function createCityElement(cityInfo) {
 
   const infoContainer = createElement('div', 'city-info-container');
 
-  const buttonElement = document.createElement('button', 'btn', 'Ver previsão');
+  const buttonElement = document.createElement('button', 'btn');
+  buttonElement.textContent = 'Ver previsão';
+  cityElement.appendChild(buttonElement);
   buttonElement.addEventListener('click', async () => {
     const getFetchButton = await fetchButton(url);
-    showForecast(await getFetchButton());
+    showForecast(getFetchButton);
   });
+  console.log(buttonElement);
 
   infoContainer.appendChild(tempContainer);
   infoContainer.appendChild(iconElement);
@@ -131,8 +134,9 @@ export async function handleSearch(event) {
   const arrayCities = await searchCities(searchValue);
   const arrayGetWeather = arrayCities.map((city) => getWeatherByCity(city.url));
   const cityPromises = await Promise.all(arrayGetWeather);
-  const cityInfo = arrayCities.map(async (city, index) => {
-    const objectCities = {
+
+  arrayCities.map(async (city, index) => {
+    const cityInfo = {
       name: city.name,
       country: city.country,
       temp: cityPromises[index].temp,
@@ -140,8 +144,7 @@ export async function handleSearch(event) {
       icon: cityPromises[index].icon,
       url: city.url,
     };
-    return createCityElement(objectCities);
+    return createCityElement(cityInfo);
   });
-  await cityInfo();
 }
 // seu código aqui;
