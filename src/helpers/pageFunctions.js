@@ -106,6 +106,7 @@ async function createCityElement(cityInfo) {
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
+  cityElement.appendChild(iconElement);
 
   return cityElement;
 }
@@ -133,7 +134,6 @@ export async function handleSearch(event) {
     };
     return createCityElement(objectCities);
   });
-  console.log(cityInfo);
   await cityInfo();
 }
 // seu código aqui;
