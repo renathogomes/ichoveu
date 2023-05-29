@@ -16,6 +16,7 @@ function createElement(tagName, className, textContent = '') {
 function createForecast(forecast) {
   const { date, maxTemp, minTemp, condition, icon } = forecast;
 
+  console.log(date);
   const weekday = new Date(date);
   weekday.setDate(weekday.getDate() + 1);
   const weekdayName = weekday.toLocaleDateString('pt-BR', { weekday: 'short' });
@@ -102,7 +103,7 @@ async function createCityElement(cityInfo) {
 
   const infoContainer = createElement('div', 'city-info-container');
 
-  const buttonElement = document.createElement('button', 'btn');
+  const buttonElement = document.createElement('button');
   buttonElement.textContent = 'Ver previsão';
   buttonElement.classList.add('city-forecast-button');
   cityElement.appendChild(buttonElement);
@@ -116,6 +117,7 @@ async function createCityElement(cityInfo) {
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
+
   cityElement.appendChild(iconElement);
   cityElement.appendChild(tempContainer);
 

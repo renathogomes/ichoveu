@@ -5,7 +5,7 @@ export const searchCities = async (term) => {
     const fetchApi = await fetch(`http://api.weatherapi.com/v1/search.json?lang=pt&key=${TOKEN}&q=${term}`);
     const data = await fetchApi.json();
 
-    if (data.length === 0) throw new Error('Nenhuma cidade encontrada');
+    if (data.length === 0 || !term) throw new Error('Nenhuma cidade encontrada');
 
     return data;
   } catch (erro) {
@@ -31,7 +31,7 @@ export const fetchButton = async (urlButton) => {
   const fetchLink = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${urlButton}&days=days=7`);
   const data = await fetchLink.json();
   const mapForecast = data.forecast.forecastday.map((forecast) => ({
-    data: forecast.date,
+    date: forecast.date,
     maxTemp: forecast.day.maxtemp_c,
     minTemp: forecast.day.mintemp_c,
     condition: forecast.day.condition.text,
