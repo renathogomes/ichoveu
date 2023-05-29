@@ -37,13 +37,6 @@ export const fetchButton = async (urlButton) => {
     condition: forecast.day.condition.text,
     icon: forecast.day.condition.icon,
   }));
-  console.log(data);
+
   return mapForecast;
 };
-
-console.log(await fetchButton('sao-paulo-sao-paulo-brazil'));
-
-/* 
-data.forecast date:"2023-05-29"
-
-*/

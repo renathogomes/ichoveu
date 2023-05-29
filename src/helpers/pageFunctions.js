@@ -1,4 +1,4 @@
-import { searchCities, getWeatherByCity } from './weatherAPI';
+import { searchCities, getWeatherByCity, fetchButton } from './weatherAPI';
 
 /**
  * Cria um elemento HTML com as informações passadas
@@ -105,6 +105,7 @@ async function createCityElement(cityInfo) {
   const buttonElement = document.createElement('button', 'btn', 'Ver previsão');
   buttonElement.addEventListener('click', async () => {
     const getFetchButton = await fetchButton(url);
+    showForecast(await getFetchButton);
   });
 
   infoContainer.appendChild(tempContainer);
