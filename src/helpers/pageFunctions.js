@@ -102,10 +102,10 @@ async function createCityElement(cityInfo) {
   const buttonElement = document.createElement('button');
   buttonElement.textContent = 'Ver previsão';
   buttonElement.classList.add('city-forecast-button');
-  cityElement.appendChild(buttonElement);
+
   buttonElement.addEventListener('click', async () => {
     const getFetchButton = await fetchButton(url);
-    showForecast(await getFetchButton);
+    showForecast(getFetchButton);
   });
 
   infoContainer.appendChild(tempContainer);
@@ -116,6 +116,7 @@ async function createCityElement(cityInfo) {
 
   cityElement.appendChild(iconElement);
   cityElement.appendChild(tempContainer);
+  cityElement.appendChild(buttonElement);
 
   return cityElement;
 }
